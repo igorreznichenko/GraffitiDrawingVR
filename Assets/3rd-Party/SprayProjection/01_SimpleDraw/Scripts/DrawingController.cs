@@ -14,17 +14,17 @@ public class DrawingController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         spot.color = Color.HSVToRGB(Mathf.Repeat(Time.time * 0.05f, 1f), 1f, 1f);
-        rotatingBuddha.Rotate(Vector3.up, rotateAngle * Time.deltaTime, Space.World);
+       //rotatingBuddha.Rotate(Vector3.up, rotateAngle * Time.deltaTime, Space.World);
 
-        spot.UpdateDrawingMat();
-        foreach(var drawable in drawables)
-            spot.Draw(drawable);
+        //spot.UpdateDrawingMat();
+        //foreach(var drawable in drawables)
+        //    spot.Draw(drawable);
 
         if (Input.GetMouseButton(0))
         {
             var cam = Camera.main;
             var pos = Input.mousePosition;
-            pos.z = 5f;
+            pos.z = 20f;
             pos = cam.ScreenToWorldPoint(pos);
             pinSpot.transform.position = cam.transform.position;
             pinSpot.transform.LookAt(pos);

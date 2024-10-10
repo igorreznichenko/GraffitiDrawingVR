@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "black" {}
+		[MainTexture] _MainTex ("Texture", 2D) = "black" {}
 	}
 	SubShader
 	{
@@ -20,7 +20,7 @@
 			struct appdata
 			{
 				float4 vertex : POSITION;
-				float2 uv2 : TEXCOORD1;
+				float2 uv2 : TEXCOORD;
 			};
 
 			struct v2f
@@ -32,9 +32,12 @@
 			v2f vert (appdata v)
 			{
 				v2f o;
+		
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv2;
+	
 				UNITY_TRANSFER_FOG(o,o.vertex);
+	
 				return o;
 			}
 

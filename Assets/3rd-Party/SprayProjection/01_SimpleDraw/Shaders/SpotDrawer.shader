@@ -28,7 +28,7 @@
 			{
 				float4 vertex : POSITION;
 				float3 normal: NORMAL;
-				float2 uv2 : TEXCOORD1;
+				float2 uv2 : TEXCOORD;
 			};
 
 			struct v2f
@@ -63,6 +63,12 @@
 
 			half4 frag (v2f i) : SV_Target
 			{
+				///diffuse
+				half3 to = i.worldPos - _DrawerPos.xyz;
+				half3 dir = normalize(to);
+				half dist = length(to);
+				half atten = _Emission * dot(-dir, i.normal) / (dist * dist);
+	
 				///spot cookie
 				half4 drawerSpacePos = mul(_WorldToDrawerMatrix, half4(i.worldPos, 1.0));
 				half4 projPos = mul(_ProjMatrix, drawerSpacePos);
@@ -74,20 +80,10 @@
 				half cookie = tex2D(_Cookie, drawerUv);
 	
 				cookie *= 0<drawerUv.x && drawerUv.x<1 && 0<drawerUv.y && drawerUv.y<1 && 0<projPos.z;
-
-				///diffuse
-				half3 to = i.worldPos - _DrawerPos.xyz;
-				half3 dir = normalize(to);
-				half dist = length(to);
-				half atten = _Emission * dot(-dir, i.normal) / (dist * dist);
-
-				///shadow
-				half drawerDepth = tex2D(_DrawerDepth, drawerUv).r;
-				atten *= 1.0 - saturate(10 * abs(drawerSpacePos.z) - 10 * drawerDepth);
-
+	
 				i.uv.y = 1 - i.uv.y;
 				half4 col = tex2D(_MainTex, i.uv);
-				col.rgb = lerp(col.rgb, _Color.rgb, saturate(col.a * _Emission * atten * cookie));
+				col.rgb = lerp(col.rgb, _Color.rgb, saturate(col.a * _Emission * cookie));
 				col.a = 1;
 	
 				return col;

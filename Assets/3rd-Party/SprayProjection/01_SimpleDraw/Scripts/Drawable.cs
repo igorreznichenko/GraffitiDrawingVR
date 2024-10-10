@@ -6,19 +6,25 @@ public class Drawable : MonoBehaviour
     public RenderTexture output;
     public Color initialColor = Color.gray;
     public Material fillCrack;
-    
-    RenderTexture[] pingPongRts;
+
+    public string TextureMaterialProperty = "_MainTex";
+
+
+	RenderTexture[] pingPongRts;
     Mesh mesh;
 
     void Start()
     {
         output = new RenderTexture(textureSize, textureSize, 0, RenderTextureFormat.ARGBHalf);
         output.Create();
+
         var r = GetComponent<Renderer>();
-        var mpb = new MaterialPropertyBlock();
-        r.GetPropertyBlock(mpb);
-        mpb.SetTexture("_MainTex", output);
-        r.SetPropertyBlock(mpb);
+        //var mpb = new MaterialPropertyBlock();
+        //r.GetPropertyBlock(mpb);
+        //mpb.SetTexture(TextureMaterialProperty, output);
+        //r.SetPropertyBlock(mpb);
+
+        r.material.SetTexture(TextureMaterialProperty, output);
 
         pingPongRts = new RenderTexture[2];
         for (var i = 0; i < 2; i++)
@@ -29,6 +35,7 @@ public class Drawable : MonoBehaviour
             GL.Clear(true, true, initialColor);
             pingPongRts[i] = outputRt;
         }
+
         mesh = GetComponent<MeshFilter>().sharedMesh;
         
         Graphics.CopyTexture(pingPongRts[0], output);
@@ -64,7 +71,7 @@ public class Drawable : MonoBehaviour
         }
 
         Graphics.CopyTexture(pingPongRts[0], output);
-    }
+	}
 
     void Swap<T>(T[] array)
     {

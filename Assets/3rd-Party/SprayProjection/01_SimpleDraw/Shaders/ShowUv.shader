@@ -20,7 +20,7 @@
 			{
 				float4 vertex : POSITION;
 				float3 normal: NORMAL;
-				float2 uv2 : TEXCOORD1;
+				float2 uv2 : TEXCOORD0;
 			};
 
 			struct v2f
@@ -39,7 +39,6 @@
 				v.uv2.y = 1.0 - v.uv2.y;
 			#endif
 				float4 pos0 = UnityObjectToClipPos(v.vertex);
-	
 				float4 pos1 = float4(v.uv2*2.0 - 1.0, 0.0, 1.0);
 
 				v2f o;
