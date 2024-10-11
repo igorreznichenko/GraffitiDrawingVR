@@ -12,7 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _RENDERSHADOW_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -37,8 +38,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emission: 0.12644565
+    - _Emission: 0.3992857
+    - _RenderShadow: 1
     m_Colors:
-    - _Color: {r: 0.10399985, g: 1, b: 0, a: 1}
-    - _DrawerPos: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _DrawerPos: {r: 0.11395642, g: 1.3871211, b: 0.07660621, a: 0}
   m_BuildTextureStacks: []

@@ -21,7 +21,7 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			
+
 			#include "UnityCG.cginc"
 
 			struct appdata
@@ -60,6 +60,7 @@
 			sampler2D _Cookie, _DrawerDepth;
 			half4 _DrawerPos, _Color;
 			half _Emission;
+			float _RenderShadow;
 
 			half4 frag (v2f i) : SV_Target
 			{
@@ -73,9 +74,11 @@
 				half4 drawerSpacePos = mul(_WorldToDrawerMatrix, half4(i.worldPos, 1.0));
 				half4 projPos = mul(_ProjMatrix, drawerSpacePos);
 				projPos.z *= -1;
-	
+
 				half2 drawerUv = projPos.xy / projPos.z;
 				drawerUv = drawerUv * 0.5 + 0.5;
+	
+				half drawerDepth = tex2D(_DrawerDepth, drawerUv).r;
 	
 				half cookie = tex2D(_Cookie, drawerUv);
 	
@@ -83,11 +86,17 @@
 	
 				i.uv.y = 1 - i.uv.y;
 				half4 col = tex2D(_MainTex, i.uv);
-				col.rgb = lerp(col.rgb, _Color.rgb, saturate(col.a * _Emission * cookie));
+	
+				if (drawerDepth > 0)
+				{
+				    drawerDepth = 1;
+				}
+	
+				col.rgb = lerp(col.rgb, _Color.rgb, saturate(col.a * drawerDepth * _Emission * cookie));
 				col.a = 1;
 	
 				return col;
-			}
+}
 			ENDCG
 		}
 	}
