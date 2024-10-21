@@ -155,7 +155,7 @@ MonoBehaviour:
   intencity: 2
   color: {r: 1, g: 1, b: 1, a: 1}
   angle: 60
-  range: 10
+  range: 1
   cookie: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
   shadowMapResolution: 1024
 --- !u!4 &936837239
