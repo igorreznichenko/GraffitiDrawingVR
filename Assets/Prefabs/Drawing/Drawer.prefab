@@ -50,8 +50,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   _angle: 30
   _range: 10
-  _drawingMat: {fileID: 2100000, guid: 55ccbf60ab7d3ac4c8bf7983f8c07a4e, type: 2}
-  cookie: {fileID: 0}
+  cookie: {fileID: 2800000, guid: d9a1cadab61957f4f83c4b1f05137bd3, type: 3}
   shadowMapResolution: 1024
   _depthRenderTextureFormat: 14
   _camera: {fileID: 3518902539565463605}

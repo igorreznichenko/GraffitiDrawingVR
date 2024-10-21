@@ -42,9 +42,6 @@ namespace GraffitiDrawingVR.Drawing
 		}
 
 		[SerializeField]
-		private Material _drawingMat;
-
-		[SerializeField]
 		private Texture cookie;
 
 		[SerializeField]
@@ -56,7 +53,11 @@ namespace GraffitiDrawingVR.Drawing
 		[SerializeField]
 		private Camera _camera;
 
+		private Material _drawingMaterial;
+
 		private Shader _depthRenderShader { get { return Shader.Find("Unlit/depthRender"); } }
+
+		private Shader _spotDrawer { get { return Shader.Find("Hidden/SpotDrawer"); } }
 
 		private RenderTexture depthOutput;
 
@@ -67,6 +68,8 @@ namespace GraffitiDrawingVR.Drawing
 
 		private void Start()
 		{
+			_drawingMaterial = new Material(_spotDrawer);
+
 			InitCamera(Camera);
 		}
 
@@ -99,19 +102,19 @@ namespace GraffitiDrawingVR.Drawing
 			var projMatrix = Camera.projectionMatrix;
 			var worldToDrawerMatrix = transform.worldToLocalMatrix;
 
-			_drawingMat.SetVector("_DrawerPos", transform.position);
-			_drawingMat.SetFloat("_Emission", _intencity * Time.smoothDeltaTime);
-			_drawingMat.SetColor("_Color", color);
-			_drawingMat.SetMatrix("_WorldToDrawerMatrix", worldToDrawerMatrix);
-			_drawingMat.SetMatrix("_ProjMatrix", projMatrix);
-			_drawingMat.SetTexture("_Cookie", cookie);
-			_drawingMat.SetTexture("_DrawerDepth", depthOutput);
+			_drawingMaterial.SetVector("_DrawerPos", transform.position);
+			_drawingMaterial.SetFloat("_Emission", _intencity * Time.smoothDeltaTime);
+			_drawingMaterial.SetColor("_Color", color);
+			_drawingMaterial.SetMatrix("_WorldToDrawerMatrix", worldToDrawerMatrix);
+			_drawingMaterial.SetMatrix("_ProjMatrix", projMatrix);
+			_drawingMaterial.SetTexture("_Cookie", cookie);
+			_drawingMaterial.SetTexture("_DrawerDepth", depthOutput);
 		}
 
 		public void Draw(Drawable drawable)
 		{
 			UpdateDrawingMat();
-			drawable.Draw(_drawingMat);
+			drawable.Draw(_drawingMaterial);
 		}
 	}
 }
