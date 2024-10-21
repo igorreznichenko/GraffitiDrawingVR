@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 354480424896013033}
   - component: {fileID: 354480424896013038}
   m_Layer: 0
-  m_Name: SprayConeExport
+  m_Name: SprayCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

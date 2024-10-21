@@ -61,6 +61,8 @@ namespace GraffitiDrawingVR.Drawing
 
 		private RenderTexture depthOutput;
 
+		private const float NEAR_CLIP_PLANE = 0.01f;
+
 		private Camera Camera
 		{
 			get { return _camera; }
@@ -94,7 +96,7 @@ namespace GraffitiDrawingVR.Drawing
 			RenderTexture.active = depthOutput;
 			GL.Clear(true, true, Color.white * Camera.farClipPlane);
 			Camera.fieldOfView = _angle;
-			Camera.nearClipPlane = 0.01f;
+			Camera.nearClipPlane = NEAR_CLIP_PLANE;
 			Camera.farClipPlane = _range;
 			Camera.Render();
 			RenderTexture.active = currentRt;
