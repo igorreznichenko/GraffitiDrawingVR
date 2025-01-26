@@ -1,7 +1,7 @@
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
-namespace GraffitiDrawingVR.VFX
+namespace GraffitiDrawingVR.Runtime.VFX
 {
 	public class SprayCanVFX : MonoBehaviour, ISprayCanVFX
 	{

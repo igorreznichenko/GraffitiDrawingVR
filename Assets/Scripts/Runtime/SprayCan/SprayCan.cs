@@ -1,12 +1,12 @@
-using GraffitiDrawingVR.Constants;
-using GraffitiDrawingVR.Drawing;
-using GraffitiDrawingVR.Input;
-using GraffitiDrawingVR.VFX;
+using GraffitiDrawingVR.Runtime.Constants;
+using GraffitiDrawingVR.Runtime.Drawing;
+using GraffitiDrawingVR.Runtime.Input;
+using GraffitiDrawingVR.Runtime.VFX;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GraffitiDrawingVR.SprayCanScripts
+namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 {
 	public class SprayCan : MonoBehaviour
 	{

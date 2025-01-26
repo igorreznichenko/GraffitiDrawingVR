@@ -1,4 +1,4 @@
-namespace GraffitiDrawingVR.Constants
+namespace GraffitiDrawingVR.Runtime.Constants
 {
 	public static class AnimatorVariableName
 	{

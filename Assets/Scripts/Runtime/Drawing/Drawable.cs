@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace GraffitiDrawingVR.Drawing
+namespace GraffitiDrawingVR.Runtime.Drawing
 {
 	public class Drawable : MonoBehaviour
 	{

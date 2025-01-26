@@ -1,10 +1,10 @@
-using GraffitiDrawingVR.Constants;
+using GraffitiDrawingVR.Runtime.Constants;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-namespace GraffitiDrawingVR.Input
+namespace GraffitiDrawingVR.Runtime.Input
 {
 	public class GrabbableTriggerInputValue : MonoBehaviour, ITriggerInputValue
 	{
