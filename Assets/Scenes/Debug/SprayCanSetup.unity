@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 730336962}
   - component: {fileID: 730336961}
   - component: {fileID: 730336964}
+  - component: {fileID: 730336965}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -288,10 +289,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _textureSize: 2048
   _output: {fileID: 0}
-  _initialColor: {r: 1, g: 1, b: 1, a: 1}
+  _initialColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
   fillCrack: {fileID: 0}
   TextureMaterialProperty: _BaseMap
   _rendrTextureFormat: 2
+--- !u!65 &730336965
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730336959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.2204466e-16, z: 10.000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &731814253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -661,6 +683,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SprayCan
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8443843674992995698, guid: 2c0994faff90088499ae93b20ac15b79,
         type: 3}

@@ -1,9 +1,12 @@
 using GraffitiDrawingVR.Constants;
+using GraffitiDrawingVR.Drawing;
 using GraffitiDrawingVR.Input;
+using GraffitiDrawingVR.VFX;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GraffitiDrawingVR.SprayCan
+namespace GraffitiDrawingVR.SprayCanScripts
 {
 	public class SprayCan : MonoBehaviour
 	{
@@ -17,29 +20,51 @@ namespace GraffitiDrawingVR.SprayCan
 		[SerializeField]
 		private float _triggerSprayPinch = 0.3f;
 
+		[SerializeField]
+		private Color _color;
+
+		public Color Color
+		{
+			get { return _color; }
+		}
+
 		private ITriggerInputValue _triggerInputValue;
+
+		private IDrawer _drawer;
+
+		private ISprayCanVFX _vfx;
 
 		private int _triggerInputValueKey = Animator.StringToHash(AnimatorVariableName.APRAY_CAN_TRIGGER_INPUT_VALUE);
 
-		private bool _isSpray = false;
-
 		public bool IsSpray
 		{
-			get { return _isSpray; }
-			protected set
-			{
-				if (_isSpray != value)
-				{
-					_isSpray = value;
+			get { return _sprayForce > 0; }
+		}
 
-					if (_isSpray)
+		private float _sprayForce;
+
+		public float SprayForce
+		{
+			get { return _sprayForce; }
+
+			private set
+			{
+				if (_sprayForce != value)
+				{
+					float lastValue = _sprayForce;
+
+					_sprayForce = value;
+
+					if (lastValue == 0 && _sprayForce > 0)
 					{
-						_startSprayEvent?.Invoke();
+						OnStartSprayEventHandler();
 					}
-					else
+					else if (lastValue > 0 && _sprayForce == 0)
 					{
-						_stopSprayEvent?.Invoke();
+						OnStopSprayEventHandler();
 					}
+
+					OnSprayForceChangedEventHandler(value);
 				}
 			}
 		}
@@ -76,26 +101,53 @@ namespace GraffitiDrawingVR.SprayCan
 		private void Awake()
 		{
 			_triggerInputValue = _triggerInputValueGameObject.GetComponent<ITriggerInputValue>();
+			_drawer = GetComponentInChildren<IDrawer>();
+			_vfx = GetComponentInChildren<ISprayCanVFX>();
+
+			SetColor(_color);
+		}
+
+		private void OnStartSprayEventHandler()
+		{
+			_vfx.StartVFX();
+			_startSprayEvent?.Invoke();
+		}
+
+		private void OnStopSprayEventHandler()
+		{
+			_vfx.StopVFX();
+			_stopSprayEvent?.Invoke();
+		}
+
+		private void OnSprayForceChangedEventHandler(float force)
+		{
+			_vfx.UpdateSprayForce(force);
+			_drawer.Draw(force);
+			_sprayForceUpdateEvent?.Invoke(force);
+		}
+
+		private void SetColor(Color color)
+		{
+			_drawer.SetColor(color);
+			_vfx.SetColor(color);
 		}
 
 		private void Update()
 		{
+			ProcessTriggerInput();
+		}
+
+		private void ProcessTriggerInput()
+		{
 			float input = _triggerInputValue.GetTriggerValue();
+
 			_animator.SetFloat(_triggerInputValueKey, input);
 
-			if (input >= _triggerSprayPinch && !_isSpray)
-			{
-				IsSpray = true;
-			}
-			else if (input < _triggerSprayPinch && _isSpray)
-			{
-				IsSpray = false;
-			}
+			SprayForce = Mathf.InverseLerp(_triggerSprayPinch, _triggerInputValue.MaxTriggerValue, input);
 
 			if (IsSpray)
 			{
-				float sprayStrength = (input - _triggerSprayPinch) / (_triggerInputValue.MaxTriggerValue - _triggerSprayPinch);
-				_sprayForceUpdateEvent?.Invoke(sprayStrength);
+				_drawer.Draw(SprayForce);
 			}
 		}
 	}

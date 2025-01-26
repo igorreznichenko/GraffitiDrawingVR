@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GraffitiDrawingVR.Drawing
 {
-	public class DrawerController : MonoBehaviour
+	public class DrawerController : MonoBehaviour, IDrawer
 	{
 		[SerializeField]
 		private Drawable[] _drawables;
@@ -16,16 +16,24 @@ namespace GraffitiDrawingVR.Drawing
 		[SerializeField]
 		private float _maxIntensity;
 
-		public void Draw(float drawStrength)
+		public void Draw(float strengthNormalized)
 		{
 			foreach (var drawable in _drawables)
 			{
 				foreach (var drawer in _drawers)
 				{
-					drawer.Intencity = Mathf.Lerp(_minIntensity, _maxIntensity, drawStrength);
+					drawer.Intencity = Mathf.Lerp(_minIntensity, _maxIntensity, strengthNormalized);
 
 					drawer.Draw(drawable);
 				}
+			}
+		}
+
+		public void SetColor(Color color)
+		{
+			foreach (var drawer in _drawers)
+			{
+				drawer.SetColor(color);
 			}
 		}
 	}
