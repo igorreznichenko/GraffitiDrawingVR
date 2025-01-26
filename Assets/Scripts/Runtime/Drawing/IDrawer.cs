@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GraffitiDrawingVR.Drawing
+namespace GraffitiDrawingVR.Runtime.Drawing
 {
 	public interface IDrawer
 	{

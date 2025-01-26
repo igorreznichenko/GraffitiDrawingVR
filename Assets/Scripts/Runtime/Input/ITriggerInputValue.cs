@@ -1,4 +1,4 @@
-namespace GraffitiDrawingVR.Input
+namespace GraffitiDrawingVR.Runtime.Input
 {
 	public interface ITriggerInputValue
 	{
