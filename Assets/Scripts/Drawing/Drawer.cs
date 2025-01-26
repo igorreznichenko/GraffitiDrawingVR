@@ -14,12 +14,12 @@ namespace GraffitiDrawingVR.Drawing
 		}
 
 		[SerializeField]
-		private Color color = Color.white;
+		private Color _color = Color.white;
 
 		public Color Color
 		{
-			get { return color; }
-			set { color = value; }
+			get { return _color; }
+			set { _color = value; }
 		}
 
 		[Range(0.01f, 90f)]
@@ -106,11 +106,16 @@ namespace GraffitiDrawingVR.Drawing
 
 			_drawingMaterial.SetVector("_DrawerPos", transform.position);
 			_drawingMaterial.SetFloat("_Emission", _intencity * Time.smoothDeltaTime);
-			_drawingMaterial.SetColor("_Color", color);
+			_drawingMaterial.SetColor("_Color", _color);
 			_drawingMaterial.SetMatrix("_WorldToDrawerMatrix", worldToDrawerMatrix);
 			_drawingMaterial.SetMatrix("_ProjMatrix", projMatrix);
 			_drawingMaterial.SetTexture("_Cookie", cookie);
 			_drawingMaterial.SetTexture("_DrawerDepth", depthOutput);
+		}
+
+		public void SetColor(Color color)
+		{
+			_color = color;
 		}
 
 		public void Draw(Drawable drawable)

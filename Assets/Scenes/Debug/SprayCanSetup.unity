@@ -684,9 +684,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: SprayCan
       objectReference: {fileID: 0}
-    - target: {fileID: 2989744591144898459, guid: 2c0994faff90088499ae93b20ac15b79,
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
         type: 3}
-      propertyPath: playOnAwake
+      propertyPath: _startColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5477404873620809240, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: _startColor.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8443843674992995698, guid: 2c0994faff90088499ae93b20ac15b79,
