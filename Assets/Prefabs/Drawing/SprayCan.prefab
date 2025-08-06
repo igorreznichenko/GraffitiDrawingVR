@@ -163,7 +163,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -335,7 +335,7 @@ MonoBehaviour:
   _animator: {fileID: 6077208523226088174}
   _triggerInputValueGameObject: {fileID: 97184213627993496}
   _triggerSprayPinch: 0.3
-  _color: {r: 1, g: 0, b: 0, a: 1}
+  _color: {r: 1, g: 1, b: 1, a: 1}
   _startSprayEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -657,6 +657,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SprayCan
       objectReference: {fileID: 0}
+    - target: {fileID: 2316488891327526073, guid: 56393c4103ad742479bc8d2f53a52cba,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f8378d456a6e68438476811ba49fbd1, type: 2}
     - target: {fileID: 3338490511197258734, guid: 56393c4103ad742479bc8d2f53a52cba,
         type: 3}
       propertyPath: m_Name
