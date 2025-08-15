@@ -1,4 +1,7 @@
+using GraffitiDrawingVR.Runtime.Extensions;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GraffitiDrawingVR.Runtime.Drawing
 {
@@ -10,6 +13,12 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 		[SerializeField]
 		private RenderTexture _output;
 
+		private RenderTexture _temp1;
+
+		private RenderTexture _temp2;
+		
+		private List<RenderTexture> _renderTextures = new List<RenderTexture>();
+
 		[SerializeField]
 		private Color _initialColor = Color.gray;
 
@@ -20,72 +29,75 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 		private string TextureMaterialProperty = "_MainTex";
 
 		[SerializeField]
-		private RenderTextureFormat _rendrTextureFormat = RenderTextureFormat.ARGBHalf;
+		private RenderTextureFormat _renderTextureFormat = RenderTextureFormat.ARGBHalf;
 
-		private RenderTexture[] pingPongRts;
-		private Mesh mesh;
+		private Renderer _renderer;
+
+		private MeshFilter _meshFilter;
+
+		private const string DRAWER_SHADER_MAIN_TEX_KEYWORD = "_MainTex";
 
 		void Start()
 		{
-			_output = new RenderTexture(_textureSize, _textureSize, 0, _rendrTextureFormat);
-			_output.Create();
+			_renderer = GetComponent<Renderer>();
 
-			var r = GetComponent<Renderer>();
-			r.material.SetTexture(TextureMaterialProperty, _output);
+			_meshFilter = GetComponent<MeshFilter>();
 
-			pingPongRts = new RenderTexture[2];
+			Texture active = _renderer.material.GetTexture(TextureMaterialProperty);
 
-			for (var i = 0; i < 2; i++)
+			if (active == null)
 			{
-				var outputRt = new RenderTexture(_textureSize, _textureSize, 0, _rendrTextureFormat);
-				outputRt.Create();
-				RenderTexture.active = outputRt;
-				GL.Clear(true, true, _initialColor);
-				pingPongRts[i] = outputRt;
+				_output = new RenderTexture(_textureSize, _textureSize, 0, _renderTextureFormat);
+				_output.Create();
+				_output.Fill(_initialColor);
 			}
+			else
+			{
+				_output = new RenderTexture(active.width, active.height, 0, _renderTextureFormat);
+				_output.Create();
+				Graphics.Blit(active, _output);
+			}
+			
+			_renderer.material.SetTexture(TextureMaterialProperty, _output);
+			
+			_temp1 = new RenderTexture(_output);
+			_temp2 = new RenderTexture(_output);
 
-			mesh = GetComponent<MeshFilter>().sharedMesh;
+			_temp1.Create();
+			_temp2.Create();
 
-			Graphics.CopyTexture(pingPongRts[0], _output);
-		}
+			Graphics.Blit (_output, _temp1);
 
-		private void OnDestroy()
-		{
-			foreach (var rt in pingPongRts)
-				rt.Release();
-			_output.Release();
+			_renderTextures.Add(_temp1);
+			_renderTextures.Add(_temp2);
 		}
 
 		public void Draw(Material drawingMat)
 		{
-			drawingMat.SetTexture("_MainTex", pingPongRts[0]);
+			drawingMat.SetTexture(DRAWER_SHADER_MAIN_TEX_KEYWORD, _renderTextures[0]);
 
-			var currentActive = RenderTexture.active;
-			RenderTexture.active = pingPongRts[1];
+			RenderTexture previousTexture = RenderTexture.active;
+
+			RenderTexture.active = _renderTextures[1];
+
 			GL.Clear(true, true, Color.clear);
 
 			drawingMat.SetPass(0);
 
-			Graphics.DrawMeshNow(mesh, transform.localToWorldMatrix);
+			Graphics.DrawMeshNow(_meshFilter.sharedMesh, _meshFilter.transform.localToWorldMatrix);
 
-			RenderTexture.active = currentActive;
+			RenderTexture.active = previousTexture;
 
-			Swap(pingPongRts);
+			Graphics.Blit(_renderTextures[1], _output);
 
-			if (fillCrack != null)
-			{
-				Graphics.Blit(pingPongRts[0], pingPongRts[1], fillCrack);
-				Swap(pingPongRts);
-			}
-
-			Graphics.CopyTexture(pingPongRts[0], _output);
+			_renderTextures.Reverse();
 		}
 
-		void Swap<T>(T[] array)
+		private void OnDestroy()
 		{
-			var tmp = array[0];
-			array[0] = array[1];
-			array[1] = tmp;
+			_output.Release();
+			_temp1.Release();
+			_temp2.Release();
 		}
 	}
 }

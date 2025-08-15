@@ -43,7 +43,7 @@ public class SpotDrawer : MonoBehaviour {
     {
         var currentRt = RenderTexture.active;
         RenderTexture.active = depthOutput;
-        GL.Clear(true, true, Color.white * camera.farClipPlane);
+        GL.Clear(true, true, Color.clear);
         camera.fieldOfView = angle;
         camera.nearClipPlane = 0.01f;
         camera.farClipPlane = range;

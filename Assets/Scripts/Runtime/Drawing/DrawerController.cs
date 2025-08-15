@@ -16,8 +16,20 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 		[SerializeField]
 		private float _maxIntensity;
 
+		float drawDelay =0f;
+
+		float currentTime = 0 ;
+
 		public void Draw(float strengthNormalized)
 		{
+			if (currentTime < drawDelay)
+			{
+				currentTime += Time.deltaTime;
+				return;
+			}
+
+			currentTime = 0;
+
 			foreach (var drawable in _drawables)
 			{
 				foreach (var drawer in _drawers)

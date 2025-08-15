@@ -28,6 +28,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 2726e3b7a169a714d869f235403e0072, type: 2}
+    - target: {fileID: 6776395031053735190, guid: 2c0994faff90088499ae93b20ac15b79,
+        type: 3}
+      propertyPath: far clip plane
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8443843674992995698, guid: 2c0994faff90088499ae93b20ac15b79,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -13,17 +13,25 @@
 			
 			#include "UnityCG.cginc"
 
+			struct appdata
+			{
+				float4 position : POSITION;
+				float4 color: COLOR;
+			};
+
 			struct v2f
 			{
+				float4 color: COLOR;
 				float depth : TEXCOORD0;
 				float4 vertex : SV_POSITION;
 			};
 
-			v2f vert (float4 pos : POSITION)
+			v2f vert (appdata i)
 			{
 				v2f o;
-				o.vertex = UnityObjectToClipPos(pos);
-				o.depth = abs(UnityObjectToViewPos(pos).z);
+				o.vertex = UnityObjectToClipPos(i.position);
+				o.depth = abs(UnityObjectToViewPos(i.position).z);
+				o.color = i.color;
 				return o;
 			}
 			

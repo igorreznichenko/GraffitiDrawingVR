@@ -45,7 +45,7 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 		private Texture cookie;
 
 		[SerializeField]
-		private int shadowMapResolution = 1024;
+		private int _depthResolution = 1024;
 
 		[SerializeField]
 		private RenderTextureFormat _depthRenderTextureFormat = RenderTextureFormat.RFloat;
@@ -71,34 +71,40 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 		private void Start()
 		{
 			_drawingMaterial = new Material(_spotDrawer);
-
 			InitCamera(Camera);
+			_drawingMaterial.SetTexture("_DrawerDepth", depthOutput);
 		}
 
 		private void InitCamera(Camera camera)
 		{
-			depthOutput = new RenderTexture(shadowMapResolution, shadowMapResolution, 16, _depthRenderTextureFormat);
+			camera.aspect = 1;
+			depthOutput = new RenderTexture(_depthResolution, _depthResolution, 16, _depthRenderTextureFormat);
 
 			depthOutput.wrapMode = TextureWrapMode.Clamp;
 
 			depthOutput.Create();
 
 			camera.targetTexture = depthOutput;
-			camera.SetReplacementShader(_depthRenderShader, "RenderType");
-			camera.clearFlags = CameraClearFlags.Nothing;
+			camera.clearFlags = CameraClearFlags.SolidColor;
+			camera.backgroundColor = Color.clear;
 			camera.nearClipPlane = 0.01f;
 			camera.enabled = false;
+			camera.SetReplacementShader(_depthRenderShader, "RenderType");
 		}
 
 		public void UpdateDrawingMat()
 		{
 			var currentRt = RenderTexture.active;
-			RenderTexture.active = depthOutput;
-			GL.Clear(true, true, Color.white * Camera.farClipPlane);
+			RenderTexture.active = Camera.targetTexture;
+
+			GL.Clear(true, true, Color.clear);
+
 			Camera.fieldOfView = _angle;
 			Camera.nearClipPlane = NEAR_CLIP_PLANE;
 			Camera.farClipPlane = _range;
+
 			Camera.Render();
+
 			RenderTexture.active = currentRt;
 
 			var projMatrix = Camera.projectionMatrix;
@@ -110,7 +116,6 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			_drawingMaterial.SetMatrix("_WorldToDrawerMatrix", worldToDrawerMatrix);
 			_drawingMaterial.SetMatrix("_ProjMatrix", projMatrix);
 			_drawingMaterial.SetTexture("_Cookie", cookie);
-			_drawingMaterial.SetTexture("_DrawerDepth", depthOutput);
 		}
 
 		public void SetColor(Color color)

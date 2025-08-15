@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _intencity: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
+  _color: {r: 1, g: 1, b: 1, a: 1}
   _angle: 30
   _range: 10
-  cookie: {fileID: 2800000, guid: d9a1cadab61957f4f83c4b1f05137bd3, type: 3}
-  shadowMapResolution: 1024
-  _depthRenderTextureFormat: 14
+  cookie: {fileID: 2800000, guid: 2da5e5c4df93df848830bbb87ffc53cf, type: 3}
+  _depthResolution: 1024
+  _depthRenderTextureFormat: 2
   _camera: {fileID: 3518902539565463605}
 --- !u!20 &3518902539565463605
 Camera:
@@ -93,7 +93,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

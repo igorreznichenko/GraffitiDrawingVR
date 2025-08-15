@@ -86,17 +86,23 @@
 	
 				i.uv.y = 1 - i.uv.y;
 				half4 col = tex2D(_MainTex, i.uv);
-	
-				if (drawerDepth > 0)
+
+
+				if(drawerDepth > 0 && drawerDepth <= 1)
 				{
-				    drawerDepth = 1;
+					drawerDepth = 1;
 				}
-	
+				else
+				{
+					drawerDepth = 0;
+				}
+
+
 				col.rgb = lerp(col.rgb, _Color.rgb, saturate(col.a * drawerDepth * _Emission * cookie));
 				col.a = 1;
 	
 				return col;
-}
+			}
 			ENDCG
 		}
 	}

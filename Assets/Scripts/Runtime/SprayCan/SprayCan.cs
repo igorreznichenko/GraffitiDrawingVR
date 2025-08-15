@@ -122,7 +122,6 @@ namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 		private void OnSprayForceChangedEventHandler(float force)
 		{
 			_vfx.UpdateSprayForce(force);
-			_drawer.Draw(force);
 			_sprayForceUpdateEvent?.Invoke(force);
 		}
 
