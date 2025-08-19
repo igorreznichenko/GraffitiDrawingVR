@@ -37,15 +37,17 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 
 		private const string DRAWER_SHADER_MAIN_TEX_KEYWORD = "_MainTex";
 
+		private Texture _originalTexture;
+
 		void Start()
 		{
 			_renderer = GetComponent<Renderer>();
 
 			_meshFilter = GetComponent<MeshFilter>();
 
-			Texture active = _renderer.material.GetTexture(TextureMaterialProperty);
+			_originalTexture = _renderer.material.GetTexture(TextureMaterialProperty);
 
-			if (active == null)
+			if (_originalTexture == null)
 			{
 				_output = new RenderTexture(_textureSize, _textureSize, 0, _renderTextureFormat);
 				_output.Create();
@@ -53,9 +55,9 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			}
 			else
 			{
-				_output = new RenderTexture(active.width, active.height, 0, _renderTextureFormat);
+				_output = new RenderTexture(_originalTexture.width, _originalTexture.height, 0, _renderTextureFormat);
 				_output.Create();
-				Graphics.Blit(active, _output);
+				Graphics.Blit(_originalTexture, _output);
 			}
 			
 			_renderer.material.SetTexture(TextureMaterialProperty, _output);
@@ -91,6 +93,18 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			Graphics.Blit(_renderTextures[1], _output);
 
 			_renderTextures.Reverse();
+		}
+
+		public void Clear()
+		{
+			if(_originalTexture != null)
+			{
+				Graphics.Blit(_originalTexture, _output);
+			}
+			else
+			{
+				_output.Fill(_initialColor);
+			}
 		}
 
 		private void OnDestroy()
