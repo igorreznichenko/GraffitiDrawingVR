@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,15 +11,11 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 
 		public void ClearDrawables()
 		{
-			foreach (var drawable in _drawables)
-			{
-				drawable.Clear();
-			}
+			Array.ForEach(_drawables, (drawable) => drawable.Clear());
 		}
 
 #if UNITY_EDITOR
-		[ContextMenu("Fill Drawables")]
-		private void FillDrawables()
+		public void FillDrawables()
 		{
 			_drawables = FindObjectsOfType<Drawable>();
 			EditorUtility.SetDirty(this);
