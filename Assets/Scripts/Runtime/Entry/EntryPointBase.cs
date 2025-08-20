@@ -1,6 +1,6 @@
-using GraffitiDrawingVR.Extensions;
 using GraffitiDrawingVR.Runtime.Configurations;
-using GraffitiDrawingVR.Runtime.Debug;
+using GraffitiDrawingVR.Runtime.DebugScripts;
+using GraffitiDrawingVR.Runtime.Extensions;
 using GraffitiDrawingVR.Runtime.VFX;
 using System.Threading.Tasks;
 using UnityEngine;

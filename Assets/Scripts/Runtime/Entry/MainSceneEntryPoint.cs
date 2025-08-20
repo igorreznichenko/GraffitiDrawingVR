@@ -24,6 +24,9 @@ namespace GraffitiDrawingVR.Runtime.Entry
 		[SerializeField]
 		private Button _saveImage;
 
+		[SerializeField]
+		private Button _loadImage;
+
 		protected override async Task Initialize()
 		{
 			await base.Initialize();
@@ -45,17 +48,24 @@ namespace GraffitiDrawingVR.Runtime.Entry
 		{
 			_resetButton.selectEntered.AddListener(OnResetButtonClickEventHandler);
 			_saveImage.onClick.AddListener(OnSaveImageButtonClickEventHandler);
+			_loadImage.onClick.AddListener(OnLoadImageClickEventHandler);
 		}
 
 		private void UnsubscribeEvents()
 		{
 			_resetButton.selectEntered.RemoveListener(OnResetButtonClickEventHandler);
 			_saveImage.onClick.RemoveListener(OnSaveImageButtonClickEventHandler);
+			_loadImage.onClick.RemoveListener(OnLoadImageClickEventHandler);
 		}
 
 		private void OnResetButtonClickEventHandler(SelectEnterEventArgs args)
 		{
 			_drawableController.ClearDrawables();
+		}
+
+		private void OnLoadImageClickEventHandler()
+		{
+			_imageSaver.LoadImage();
 		}
 
 		private void OnSaveImageButtonClickEventHandler()

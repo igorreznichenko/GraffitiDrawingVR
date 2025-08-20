@@ -1,5 +1,7 @@
 using GraffitiDrawingVR.Runtime.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace GraffitiDrawingVR.Runtime.Drawing
@@ -127,6 +129,12 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			renderTexture.Release();
 
 			return result;
+		}
+
+		public void SetTexture(Texture2D image)
+		{
+			Graphics.Blit(image, _renderTextures[0]);
+			Graphics.Blit(image, _output);
 		}
 
 		private void OnDestroy()

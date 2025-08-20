@@ -17,7 +17,7 @@ MonoBehaviour:
   - GrabInteraction
   - PokeInteraction
   - TeleportInteraction
-  - 
+  - RayInteraction
   - 
   - 
   - 

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace GraffitiDrawingVR.Extensions
+namespace GraffitiDrawingVR.Runtime.Extensions
 {
 	public static class TaskExtensions
 	{
@@ -11,7 +11,7 @@ namespace GraffitiDrawingVR.Extensions
 			{
 				if (t.Exception != null)
 				{
-					Debug.Log(t.Exception);
+					UnityEngine.Debug.Log(t.Exception);
 				}
 			}, TaskContinuationOptions.NotOnCanceled);
 		}

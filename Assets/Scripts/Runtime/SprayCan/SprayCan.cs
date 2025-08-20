@@ -1,10 +1,12 @@
 using GraffitiDrawingVR.Runtime.Constants;
 using GraffitiDrawingVR.Runtime.Drawing;
 using GraffitiDrawingVR.Runtime.Input;
+using GraffitiDrawingVR.Runtime.Interaction;
 using GraffitiDrawingVR.Runtime.VFX;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 {
@@ -21,6 +23,22 @@ namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 		private float _triggerSprayPinch = 0.3f;
 
 		[SerializeField]
+		private XRBaseInteractable _xrBaseInteractable;
+
+		[Header("Color Visual")]
+		[SerializeField]
+		private MeshRenderer _meshRenderer;
+
+		[SerializeField]
+		private int _colorMaterialIndex;
+
+		[Header("Color Pick")]
+		[SerializeField]
+		private ColorPickerUI _colorPickerUI;
+
+		[SerializeField]
+		private LookDetectionHelper _lookDetectionHelper;
+
 		private Color _color;
 
 		public Color Color
@@ -103,8 +121,52 @@ namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 			_triggerInputValue = _triggerInputValueGameObject.GetComponent<ITriggerInputValue>();
 			_drawer = GetComponentInChildren<IDrawer>();
 			_vfx = GetComponentInChildren<ISprayCanVFX>();
+		}
 
-			SetColor(_color);
+		private void Start()
+		{
+			SetColor(_colorPickerUI.ActiveColor);
+			_colorPickerUI.Hide();
+			_lookDetectionHelper.IsActive = false;
+		}
+
+		private void OnEnable()
+		{
+			SubscribeEvents();
+		}
+
+		private void OnDisable()
+		{
+			UnsubscribeEvents();
+		}
+
+		private void SubscribeEvents()
+		{
+			_colorPickerUI.ColorUpdatedEvent += OnColorPickerColorChangedEventHandler;
+			_xrBaseInteractable.selectEntered.AddListener(OnSelectEnteredEventHandler);
+			_xrBaseInteractable.selectExited.AddListener(OnSelectExitedEventHandler);
+		}
+
+		private void UnsubscribeEvents()
+		{
+			_colorPickerUI.ColorUpdatedEvent -= OnColorPickerColorChangedEventHandler;
+			_xrBaseInteractable.selectEntered.RemoveListener(OnSelectEnteredEventHandler);
+			_xrBaseInteractable.selectExited.RemoveListener(OnSelectExitedEventHandler);
+		}
+
+		private void OnSelectEnteredEventHandler(SelectEnterEventArgs args)
+		{
+			_lookDetectionHelper.IsActive = true;
+		}
+
+		private void OnSelectExitedEventHandler(SelectExitEventArgs arg0)
+		{
+			_lookDetectionHelper.IsActive = false;
+		}
+
+		private void OnColorPickerColorChangedEventHandler(Color color)
+		{
+			SetColor(color);
 		}
 
 		private void OnStartSprayEventHandler()
@@ -125,10 +187,17 @@ namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 			_sprayForceUpdateEvent?.Invoke(force);
 		}
 
-		private void SetColor(Color color)
+		public void SetColor(Color color)
 		{
 			_drawer.SetColor(color);
 			_vfx.SetColor(color);
+
+			Material material = _meshRenderer.materials[_colorMaterialIndex];
+			material.color = color;
+
+			_colorPickerUI.ActiveColor = color;
+
+			_color = color;
 		}
 
 		private void Update()

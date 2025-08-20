@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace GraffitiDrawingVR.Runtime.Debug
+namespace GraffitiDrawingVR.Runtime.DebugScripts
 {
 	public class FPSCounter : MonoBehaviour
 	{

@@ -1,5 +1,6 @@
 using SFB;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace GraffitiDrawingVR.Runtime.Drawing
@@ -30,12 +31,35 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			{
 				if (string.IsNullOrEmpty(path))
 				{
+					Debug.LogError("Invalid file path!");
 					return;
 				}
 
 				byte[] data = image.EncodeToPNG();
 
 				await File.WriteAllBytesAsync(path, data);
+			});
+		}
+
+		public void LoadImage()
+		{
+			StandaloneFileBrowser.OpenFilePanelAsync("Load Image", "", "png", false, async (paths) =>
+			{
+				Texture2D image = new Texture2D(1, 1);
+
+				string path = paths.First();
+
+				if (string.IsNullOrEmpty(path))
+				{
+					Debug.LogError("Invalid file path!");
+					return;
+				}
+
+				byte[] data = await File.ReadAllBytesAsync(path);
+
+				image.LoadImage(data);
+
+				_drawable.SetTexture(image);
 			});
 		}
 	}
