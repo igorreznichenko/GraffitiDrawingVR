@@ -1,7 +1,6 @@
 using GraffitiDrawingVR.Runtime.Extensions;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace GraffitiDrawingVR.Runtime.Drawing
 {
@@ -16,7 +15,7 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 		private RenderTexture _temp1;
 
 		private RenderTexture _temp2;
-		
+
 		private List<RenderTexture> _renderTextures = new List<RenderTexture>();
 
 		[SerializeField]
@@ -59,16 +58,16 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 				_output.Create();
 				Graphics.Blit(_originalTexture, _output);
 			}
-			
+
 			_renderer.material.SetTexture(TextureMaterialProperty, _output);
-			
+
 			_temp1 = new RenderTexture(_output);
 			_temp2 = new RenderTexture(_output);
 
 			_temp1.Create();
 			_temp2.Create();
 
-			Graphics.Blit (_output, _temp1);
+			Graphics.Blit(_output, _temp1);
 
 			_renderTextures.Add(_temp1);
 			_renderTextures.Add(_temp2);
@@ -97,7 +96,7 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 
 		public void Clear()
 		{
-			if(_originalTexture != null)
+			if (_originalTexture != null)
 			{
 				Graphics.Blit(_originalTexture, _output);
 			}
@@ -105,6 +104,29 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			{
 				_output.Fill(_initialColor);
 			}
+
+			Graphics.Blit(_output, _renderTextures[0]);
+		}
+
+		public Texture2D CopyToTexture2D(int width, int height, TextureFormat textureFormat)
+		{
+			RenderTexture renderTexture = new RenderTexture(width, height, 0);
+			renderTexture.Create();
+
+			Graphics.Blit(_output, renderTexture);
+
+			RenderTexture currentActive = RenderTexture.active;
+
+			Texture2D result = new Texture2D(width, height, textureFormat, false);
+
+			result.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+			result.Apply();
+
+			RenderTexture.active = currentActive;
+
+			renderTexture.Release();
+
+			return result;
 		}
 
 		private void OnDestroy()
