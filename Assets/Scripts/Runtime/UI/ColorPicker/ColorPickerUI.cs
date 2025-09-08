@@ -1,3 +1,4 @@
+using GraffitiDrawingVR.Extensions;
 using GraffitiDrawingVR.Runtime.Extensions;
 using GraffitiDrawingVR.Runtime.UI;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace GraffitiDrawingVR
 	public class ColorPickerUI : UIBase
 	{
 		[SerializeField]
-		private GameObject _container;
+		private FlexibleColorPicker _colorPicker;
 
 		[SerializeField]
-		private FlexibleColorPicker _colorPicker;
+		private CanvasGroup _canvasGroup;
 
 		public Color ActiveColor
 		{
@@ -32,26 +33,26 @@ namespace GraffitiDrawingVR
 			remove => _colorPicker.onColorChange.RemoveListener(value);
 		}
 
-		public override Task Hide()
-		{
-			_container.SetActive(false);
-			return Task.CompletedTask;
-		}
-
-		public void HideAndForget()
-		{
-			Hide().Except();
-		}
-
 		public override Task Show()
 		{
-			_container.SetActive(true);
+			_canvasGroup.ShowImmediately();
 			return Task.CompletedTask;
 		}
 
 		public void ShowAndForget()
 		{
 			Show().Except();
+		}
+
+		public override Task Hide()
+		{
+			_canvasGroup.HideImmediately();
+			return Task.CompletedTask;
+		}
+
+		public void HideAndForget()
+		{
+			Hide().Except();
 		}
 	}
 }

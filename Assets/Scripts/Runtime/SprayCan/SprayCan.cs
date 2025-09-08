@@ -1,5 +1,6 @@
 using GraffitiDrawingVR.Runtime.Constants;
 using GraffitiDrawingVR.Runtime.Drawing;
+using GraffitiDrawingVR.Runtime.Extensions;
 using GraffitiDrawingVR.Runtime.Input;
 using GraffitiDrawingVR.Runtime.Interaction;
 using GraffitiDrawingVR.Runtime.VFX;
@@ -126,7 +127,7 @@ namespace GraffitiDrawingVR.Runtime.SprayCanScripts
 		private void Start()
 		{
 			SetColor(_colorPickerUI.ActiveColor);
-			_colorPickerUI.Hide();
+			_colorPickerUI.Hide().Except();
 			_lookDetectionHelper.IsActive = false;
 		}
 

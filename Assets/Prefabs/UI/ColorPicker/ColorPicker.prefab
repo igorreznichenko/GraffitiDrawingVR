@@ -6363,6 +6363,7 @@ GameObject:
   - component: {fileID: 2178671484107176300}
   - component: {fileID: 8797665509087524979}
   - component: {fileID: 3028178455242059556}
+  - component: {fileID: 6396269068763447275}
   m_Layer: 5
   m_Name: FlexibleColorPicker
   m_TagString: Untagged
@@ -6524,8 +6525,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d2326d6cd67c0468adafc4ded3f007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _container: {fileID: 3309603266913957192}
   _colorPicker: {fileID: 2178671484107176300}
+  _canvasGroup: {fileID: 6396269068763447275}
+--- !u!225 &6396269068763447275
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178671484107176302}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2178671484114856289
 GameObject:
   m_ObjectHideFlags: 0
