@@ -47,7 +47,7 @@ namespace GraffitiDrawingVR.Runtime.Drawing
 			{
 				Texture2D image = new Texture2D(1, 1);
 
-				string path = paths.First();
+				string path = paths.FirstOrDefault();
 
 				if (string.IsNullOrEmpty(path))
 				{

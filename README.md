@@ -1,5 +1,14 @@
 # Graffiti Drawing VR
 
+## Description
+- Unity version 2022.3.50f1
+
+VR project to draw graffiti art using a spray can.
+
+## Screenshots
+
+## Installation
+
 ### Plugins
 
 | Plugin name            | Version      | Notes                                                                                                                |

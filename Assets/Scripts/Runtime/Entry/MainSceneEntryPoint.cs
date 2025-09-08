@@ -2,7 +2,6 @@ using GraffitiDrawingVR.Runtime.Drawing;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace GraffitiDrawingVR.Runtime.Entry
 {
@@ -10,9 +9,6 @@ namespace GraffitiDrawingVR.Runtime.Entry
 	{
 		[SerializeField]
 		private DrawableController _drawableController;
-
-		[SerializeField]
-		private XRBaseInteractable _resetButton;
 
 		[Header("Image Saving")]
 		[SerializeField]
@@ -26,6 +22,9 @@ namespace GraffitiDrawingVR.Runtime.Entry
 
 		[SerializeField]
 		private Button _loadImage;
+
+		[SerializeField]
+		private Button _clearImage;
 
 		protected override async Task Initialize()
 		{
@@ -46,19 +45,19 @@ namespace GraffitiDrawingVR.Runtime.Entry
 
 		private void SubscribeEvents()
 		{
-			_resetButton.selectEntered.AddListener(OnResetButtonClickEventHandler);
+			_clearImage.onClick.AddListener(OnClearImageButtonClickEventHandler);
 			_saveImage.onClick.AddListener(OnSaveImageButtonClickEventHandler);
 			_loadImage.onClick.AddListener(OnLoadImageClickEventHandler);
 		}
 
 		private void UnsubscribeEvents()
 		{
-			_resetButton.selectEntered.RemoveListener(OnResetButtonClickEventHandler);
+			_clearImage.onClick.RemoveListener(OnClearImageButtonClickEventHandler);
 			_saveImage.onClick.RemoveListener(OnSaveImageButtonClickEventHandler);
 			_loadImage.onClick.RemoveListener(OnLoadImageClickEventHandler);
 		}
 
-		private void OnResetButtonClickEventHandler(SelectEnterEventArgs args)
+		private void OnClearImageButtonClickEventHandler()
 		{
 			_drawableController.ClearDrawables();
 		}
