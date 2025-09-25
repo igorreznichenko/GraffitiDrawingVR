@@ -21,6 +21,10 @@ VR project to draw graffiti art using a spray can.
 You can run the experience with the XR Device Simulator or with a VR Headset.
 To run the app using the device simulator, please locate the `AppConfig` scriptable object in the project and check the corresponding field. Enter the play mode.
 
+## Contributions
+
+The main idea for drawing logic was taken from [this](https://github.com/sugi-cho/Unity-ProjectionSpray-v2) project.
+
 ### Plugins
 
 | Plugin name            | Version      | Notes                                                                                                                |
