@@ -6,15 +6,15 @@
 VR project to draw graffiti art using a spray can.
 
 ## Screenshots
-![Screen1](Images\Screen1.jpg)
+![Screen1](Images/Screen1.jpg)
 
-![Screen2](Images\Screen2.jpg)
+![Screen2](Images/Screen2.jpg)
 
-![Screen3](Images\Screen3.jpg)
+![Screen3](Images/Screen3.jpg)
 
-![Screen4](Images\Screen4.jpg)
+![Screen4](Images/Screen4.jpg)
 
-![Screen5](Images\Screen5.jpg)
+![Screen5](Images/Screen5.jpg)
 
 ## How to play
 
