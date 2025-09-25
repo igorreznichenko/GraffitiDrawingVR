@@ -6,8 +6,20 @@
 VR project to draw graffiti art using a spray can.
 
 ## Screenshots
+![Screen1](Images\Screen1.jpg)
 
-## Installation
+![Screen2](Images\Screen2.jpg)
+
+![Screen3](Images\Screen3.jpg)
+
+![Screen4](Images\Screen4.jpg)
+
+![Screen5](Images\Screen5.jpg)
+
+## How to play
+
+You can run the experience with the XR Device Simulator or with a VR Headset.
+To run the app using the device simulator, please locate the `AppConfig` scriptable object in the project and check the corresponding field. Enter the play mode.
 
 ### Plugins
 
